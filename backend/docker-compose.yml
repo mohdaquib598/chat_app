@@ -1,0 +1,33 @@
+name: chatApp
+services:
+  backend_main:
+    # image: Dockerfile.local
+    env_file: .env
+    build:
+      dockerfile: Dockerfile.dev
+      context: .
+    ports:
+      - 3003:3003
+    volumes:
+      - ./main:/app/main/
+    depends_on: 
+      - db
+    networks:
+      - chatapp_network
+  db:
+    image: mariadb:11.2.6-jammy
+    env_file: .env
+    ports:
+      - 3307:3306
+    volumes:
+      - ./mariadb_data:/var/lib/mysql   
+    networks:
+      - chatapp_network  
+
+networks:
+  chatapp_network:
+    driver: bridge
+
+volumes:
+  mariadb_data:
+    driver: local

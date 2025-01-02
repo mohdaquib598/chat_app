@@ -1,0 +1,11 @@
+FROM node:23-alpine
+WORKDIR ./app
+# RUN mkdir 
+COPY ./main ./main
+COPY ./package.json .
+COPY ./nodemon.json .
+COPY ./tsconfig.json .
+# COPY nodemon.json .
+RUN npm install
+EXPOSE 3003
+CMD [ "npm", "run", "dev" ]
